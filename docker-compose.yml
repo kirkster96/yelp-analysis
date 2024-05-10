@@ -1,4 +1,5 @@
-FROM ubuntu:latest
-LABEL authors="Kirks"
-
-ENTRYPOINT ["top", "-b"]
+services:
+  mongo:
+    image: mongo
+    ports:
+      - '27017:27017'

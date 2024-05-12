@@ -1,1 +1,13 @@
-spring.application.name=yelp-analysis
+#spring.application.name=yelp-analysis
+spring:
+  application:
+    name: yelp-analysis
+
+
+data:
+  business:
+    file: C:\Users\Kirks\IdeaProjects\yelp-analysis\archive\yelp_academic_dataset_business.json
+
+logging:
+  level:
+    org.springframework.batch.core: DEBUG

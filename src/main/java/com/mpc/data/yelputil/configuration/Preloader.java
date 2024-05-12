@@ -32,6 +32,9 @@ public class Preloader {
 		@Override
     	public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
 			System.out.println("PreloaderConditional matches");
+			for (String bean : context.getRegistry().getBeanDefinitionNames()){
+				System.out.println(bean);
+			}
     		return true;
     	}
 	}

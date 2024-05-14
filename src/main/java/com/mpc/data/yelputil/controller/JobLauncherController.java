@@ -8,7 +8,6 @@ import org.springframework.batch.core.explore.JobExplorer;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
-import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +23,9 @@ public class JobLauncherController {
 	private Job businessJob;
 
 	@Autowired
+	private Job checkinJob;
+
+	@Autowired
 	private JobExplorer jobExplorer;
 
 	@GetMapping("/jobLauncher")
@@ -32,6 +34,7 @@ public class JobLauncherController {
 		JobExecution exec;
 		try {
 			exec = jobLauncher.run(businessJob, new JobParameters());
+			jobLauncher.run(checkinJob, new JobParameters());
 		} catch (JobExecutionAlreadyRunningException e) {
 			return e.getMessage();
 		} catch (JobRestartException e) {

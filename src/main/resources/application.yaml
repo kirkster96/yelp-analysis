@@ -4,8 +4,8 @@ spring:
 
 
 data:
-  business:
-    file: C:\Users\Kirks\IdeaProjects\yelp-analysis\archive\yelp_academic_dataset_business.json
+  businessfile: C:\Users\Kirks\IdeaProjects\yelp-analysis\archive\yelp_academic_dataset_business.json
+  checkinfile: C:\Users\Kirks\IdeaProjects\yelp-analysis\archive\yelp_academic_dataset_checkin.json
 
 
 

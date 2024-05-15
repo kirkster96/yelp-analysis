@@ -9,12 +9,18 @@ import org.springframework.batch.core.launch.support.TaskExecutorJobLauncher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.jdbc.support.JdbcTransactionManager;
 
 @Configuration
 public class BatchConfiguration extends DefaultBatchConfiguration {
+
+	@Bean
+	public TaskExecutor batchTaskExecutor() {
+		return new SimpleAsyncTaskExecutor("spring_batch");
+	}
 
 	@Bean
 	public DataSource dataSource() {

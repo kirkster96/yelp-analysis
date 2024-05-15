@@ -26,6 +26,9 @@ public class JobLauncherController {
 	private Job checkinJob;
 
 	@Autowired
+	private Job userJob;
+
+	@Autowired
 	private JobExplorer jobExplorer;
 
 	@GetMapping("/jobLauncher")
@@ -35,6 +38,7 @@ public class JobLauncherController {
 		try {
 			exec = jobLauncher.run(businessJob, new JobParameters());
 			jobLauncher.run(checkinJob, new JobParameters());
+			jobLauncher.run(userJob, new JobParameters());
 		} catch (JobExecutionAlreadyRunningException e) {
 			return e.getMessage();
 		} catch (JobRestartException e) {

@@ -6,6 +6,7 @@ spring:
 data:
   businessfile: C:\Users\Kirks\IdeaProjects\yelp-analysis\archive\yelp_academic_dataset_business.json
   checkinfile: C:\Users\Kirks\IdeaProjects\yelp-analysis\archive\yelp_academic_dataset_checkin.json
+  userfile: C:\Users\Kirks\IdeaProjects\yelp-analysis\archive\yelp_academic_dataset_user.json
 
 
 

@@ -1,7 +1,11 @@
 package com.mpc.data.yelputil.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document("users")
 public record User(
-		String user_id,
+		@Id String user_id,
 		String name,
 		Integer review_count,
 		String yelping_since,

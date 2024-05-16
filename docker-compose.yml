@@ -3,6 +3,8 @@ services:
     image: mongo
     ports:
       - '27017:27017'
+    volumes:
+      - 'D:\mongo:/data/db'
   postgres:
     image: postgres
     environment:

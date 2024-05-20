@@ -6,18 +6,18 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document("businesses")
 data class Business(
-    @Id val businessId: String,
-    val name: String,
-    val address: String,
-    val city: String,
-    val state: String,
-    val postalCode: String,
-    val latitude: Double,
-    val longitude: Double,
-    val stars: Float,
-    val reviewCount: Int,
-    val isOpen: Int,
-    val attributes: Map<String, String>,
-    val categories: String,
-    val hours: Map<String, String>
+    @Id val business_id: String?,
+    val name: String?,
+    val address: String?,
+    val city: String?,
+    val state: String?,
+    val postal_code: String?,
+    val latitude: Double?,
+    val longitude: Double?,
+    val stars: Float?,
+    val review_count: Int?,
+    val is_open: Int?,
+    val attributes: Map<String, String>?,
+    val categories: String?,
+    val hours: Map<String, String>?
 )

@@ -1,20 +1,18 @@
-package com.mpc.data.yelputil.service;
+package com.mpc.data.yelputil.service
 
-import com.mpc.data.yelputil.model.Business;
-import com.mpc.data.yelputil.repository.BusinessRepository;
+import com.mpc.data.yelputil.model.Business
+import com.mpc.data.yelputil.repository.BusinessRepository
+import org.springframework.stereotype.Service
 
-import org.springframework.stereotype.Service;
+interface BusinessService {
+    fun write(business: Business?)
+}
 
 @Service
-public class BusinessService {
-	private BusinessRepository businessRepository;
-
-	public BusinessService(BusinessRepository businessRepository) {
-		this.businessRepository = businessRepository;
-	}
-
-	public void write(Business business) {
-		businessRepository.save(business);
-	}
-
+class BusinessServiceImpl(private val businessRepository: BusinessRepository) : BusinessService {
+    override fun write(business: Business?) {
+        if (business != null) {
+            businessRepository.save(business)
+        }
+    }
 }

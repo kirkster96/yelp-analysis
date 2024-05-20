@@ -2,7 +2,9 @@ package com.mpc.data.yelputil.configuration;
 
 import java.net.MalformedURLException;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.module.kotlin.KotlinModule;
 import com.mpc.data.yelputil.model.Business;
 import com.mpc.data.yelputil.service.BusinessService;
 
@@ -51,7 +53,7 @@ public class BusinessBatchConfiguration{
     			.name("businessFlatFileItemReader")
     			.resource(new FileSystemResource(businessFilePath))
 				.lineMapper(new LineMapper<Business>() {
-					ObjectMapper mapper = new ObjectMapper();
+					ObjectMapper mapper = new ObjectMapper().registerModule(new KotlinModule());
 					@Override
 					public Business mapLine(String line, int lineNumber) throws Exception {
 						return mapper.readValue(line, Business.class);

@@ -1,5 +1,10 @@
 package com.mpc.data.yelputil.controller;
 
+import java.util.List;
+
+import com.mpc.data.yelputil.model.Review;
+import com.mpc.data.yelputil.service.ReviewService;
+
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
@@ -10,29 +15,48 @@ import org.springframework.batch.core.repository.JobExecutionAlreadyRunningExcep
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class JobLauncherController {
 
-	@Autowired
-	private JobLauncher jobLauncher;
+	private final JobLauncher jobLauncher;
+	private final Job businessJob;
+	private final Job checkinJob;
+	private final Job userJob;
+	private final Job reviewJob;
+	private final JobExplorer jobExplorer;
+	private final ReviewService reviewService;
 
-	@Autowired
-	private Job businessJob;
+	public JobLauncherController(JobLauncher jobLauncher, Job businessJob, Job checkinJob, Job userJob, Job reviewJob, JobExplorer jobExplorer, ReviewService reviewService) {
+		this.jobLauncher = jobLauncher;
+		this.businessJob = businessJob;
+		this.checkinJob = checkinJob;
+		this.userJob = userJob;
+		this.reviewJob = reviewJob;
+		this.jobExplorer = jobExplorer;
+		this.reviewService = reviewService;
+	}
 
-	@Autowired
-	private Job checkinJob;
+	@GetMapping("/reviews/{id}")
+	@Cacheable("cache1")
+	public Review getReviews(@PathVariable("id") String id){
 
-	@Autowired
-	private Job userJob;
+		try {
+			// time in milliseconds
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+		}
+		return reviewService.read(id);
+	}
 
-	@Autowired
-	private Job reviewJob;
 
-	@Autowired
-	private JobExplorer jobExplorer;
 
 	@GetMapping("/jobLauncher")
 	public String handle() {

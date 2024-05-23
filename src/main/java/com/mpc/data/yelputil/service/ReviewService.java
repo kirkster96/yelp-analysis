@@ -19,4 +19,8 @@ public class ReviewService {
 	public void write(Review review) {
 		reviewRepository.save(review);
 	}
+
+	public Review read(String id) {
+		return reviewRepository.findById(id).orElse(null);
+	}
 }

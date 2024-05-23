@@ -2,6 +2,12 @@ spring:
   application:
     name: yelp-analysis
 
+  cache:
+    cache-names: "cache1,cache2"
+    caffeine:
+      spec: "maximumSize=500,expireAfterAccess=600s"
+
+
 
 data:
   businessfile: C:\Users\Kirks\IdeaProjects\yelp-analysis\archive\yelp_academic_dataset_business.json
@@ -14,3 +20,4 @@ data:
 #logging:
 #  level:
 #    org.springframework.batch.core: DEBUG
+#     org.springframework.web: DEBUG

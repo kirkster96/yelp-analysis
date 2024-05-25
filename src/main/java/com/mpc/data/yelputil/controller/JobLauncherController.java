@@ -2,7 +2,9 @@ package com.mpc.data.yelputil.controller;
 
 import java.util.List;
 
+import com.mpc.data.yelputil.model.Business;
 import com.mpc.data.yelputil.model.Review;
+import com.mpc.data.yelputil.service.BusinessService;
 import com.mpc.data.yelputil.service.ReviewService;
 
 import org.springframework.batch.core.Job;
@@ -16,6 +18,7 @@ import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteExcep
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,8 +34,9 @@ public class JobLauncherController {
 	private final Job reviewJob;
 	private final JobExplorer jobExplorer;
 	private final ReviewService reviewService;
+	private final BusinessService businessService;
 
-	public JobLauncherController(JobLauncher jobLauncher, Job businessJob, Job checkinJob, Job userJob, Job reviewJob, JobExplorer jobExplorer, ReviewService reviewService) {
+	public JobLauncherController(JobLauncher jobLauncher, Job businessJob, Job checkinJob, Job userJob, Job reviewJob, JobExplorer jobExplorer, ReviewService reviewService, BusinessService businessService) {
 		this.jobLauncher = jobLauncher;
 		this.businessJob = businessJob;
 		this.checkinJob = checkinJob;
@@ -40,6 +44,7 @@ public class JobLauncherController {
 		this.reviewJob = reviewJob;
 		this.jobExplorer = jobExplorer;
 		this.reviewService = reviewService;
+		this.businessService = businessService;
 	}
 
 	@GetMapping("/reviews/{id}")
@@ -58,15 +63,72 @@ public class JobLauncherController {
 
 
 
-	@GetMapping("/jobLauncher")
-	public String handle() {
+	@GetMapping("/jobLauncher/businesses")
+	public String launchBusinessJob() {
 
 		JobExecution exec;
 		try {
 			exec = jobLauncher.run(businessJob, new JobParameters());
-			jobLauncher.run(checkinJob, new JobParameters());
-			jobLauncher.run(userJob, new JobParameters());
-			jobLauncher.run(reviewJob, new JobParameters());
+		} catch (JobExecutionAlreadyRunningException e) {
+			return e.getMessage();
+		} catch (JobRestartException e) {
+			return e.getMessage();
+		} catch (JobInstanceAlreadyCompleteException e) {
+			return e.getMessage();
+		} catch (JobParametersInvalidException e) {
+			return e.getMessage();
+		}
+		return exec.toString();
+	}
+
+	@DeleteMapping("/businesses")
+	public String deleteBusinessData(){
+		businessService.deleteAll();
+		return "business data removed";
+	}
+
+	@GetMapping("/jobLauncher/checkins")
+	public String launchCheckinJob() {
+
+		JobExecution exec;
+		try {
+			exec = jobLauncher.run(checkinJob, new JobParameters());
+		} catch (JobExecutionAlreadyRunningException e) {
+			return e.getMessage();
+		} catch (JobRestartException e) {
+			return e.getMessage();
+		} catch (JobInstanceAlreadyCompleteException e) {
+			return e.getMessage();
+		} catch (JobParametersInvalidException e) {
+			return e.getMessage();
+		}
+		return exec.toString();
+	}
+
+	@GetMapping("/jobLauncher/users")
+	public String launchUserJob() {
+
+		JobExecution exec;
+		try {
+			exec = jobLauncher.run(userJob, new JobParameters());
+		} catch (JobExecutionAlreadyRunningException e) {
+			return e.getMessage();
+		} catch (JobRestartException e) {
+			return e.getMessage();
+		} catch (JobInstanceAlreadyCompleteException e) {
+			return e.getMessage();
+		} catch (JobParametersInvalidException e) {
+			return e.getMessage();
+		}
+		return exec.toString();
+	}
+
+	@GetMapping("/jobLauncher/reviews")
+	public String launchReviewJob() {
+
+		JobExecution exec;
+		try {
+			exec = jobLauncher.run(reviewJob, new JobParameters());
 		} catch (JobExecutionAlreadyRunningException e) {
 			return e.getMessage();
 		} catch (JobRestartException e) {

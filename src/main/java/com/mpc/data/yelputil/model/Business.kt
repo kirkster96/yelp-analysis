@@ -17,7 +17,7 @@ data class Business(
     val stars: Float?,
     val review_count: Int?,
     val is_open: Int?,
-    val attributes: Map<String, String>?,
+    val attributes: Map<String, Any>?,
     val categories: String?,
     val hours: Map<String, String>?
 )

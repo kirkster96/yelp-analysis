@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service
 
 interface BusinessService {
     fun write(business: Business?)
+    fun deleteAll()
 }
 
 @Service
@@ -15,4 +16,9 @@ class BusinessServiceImpl(private val businessRepository: BusinessRepository) : 
             businessRepository.save(business)
         }
     }
+
+    override fun deleteAll() {
+        businessRepository.deleteAll()
+    }
+
 }

@@ -29,6 +29,7 @@ public class JobLauncherController {
 
 	private final JobLauncher jobLauncher;
 	private final Job businessJob;
+	private final Job businessAttributeAnalysisJob;
 	private final Job checkinJob;
 	private final Job userJob;
 	private final Job reviewJob;
@@ -36,9 +37,10 @@ public class JobLauncherController {
 	private final ReviewService reviewService;
 	private final BusinessService businessService;
 
-	public JobLauncherController(JobLauncher jobLauncher, Job businessJob, Job checkinJob, Job userJob, Job reviewJob, JobExplorer jobExplorer, ReviewService reviewService, BusinessService businessService) {
+	public JobLauncherController(JobLauncher jobLauncher, Job businessJob, Job businessAttributeAnalysisJob, Job checkinJob, Job userJob, Job reviewJob, JobExplorer jobExplorer, ReviewService reviewService, BusinessService businessService) {
 		this.jobLauncher = jobLauncher;
 		this.businessJob = businessJob;
+		this.businessAttributeAnalysisJob = businessAttributeAnalysisJob;
 		this.checkinJob = checkinJob;
 		this.userJob = userJob;
 		this.reviewJob = reviewJob;
@@ -59,6 +61,23 @@ public class JobLauncherController {
 			e.printStackTrace();
 		}
 		return reviewService.read(id);
+	}
+
+	@GetMapping("/analysis/businesses/attributes")
+	public String launchBusinessAttributesAnalysis(){
+		JobExecution exec;
+		try {
+			exec = jobLauncher.run(businessAttributeAnalysisJob, new JobParameters());
+		} catch (JobExecutionAlreadyRunningException e) {
+			return e.getMessage();
+		} catch (JobRestartException e) {
+			return e.getMessage();
+		} catch (JobInstanceAlreadyCompleteException e) {
+			return e.getMessage();
+		} catch (JobParametersInvalidException e) {
+			return e.getMessage();
+		}
+		return exec.toString();
 	}
 
 

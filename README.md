@@ -1,4 +1,4 @@
-# yelp-Analysis
+# yelp-analysis
 
 Welcome to our Yelp Analysis project! 
 

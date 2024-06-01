@@ -7,10 +7,9 @@
    * [Spring AI](#spring-ai)
    * [Spring Batch](#spring-batch)
    * [Open API Specification](#open-api-specification)
-5. [How to use docker-compose.yml](#how-to-use-the-docker-composeyml)
-6. [Contribute](#contribute)
-7. [License](#license)
-8. [Contact](#contact)
+5. [Contribute](#contribute)
+6. [License](#license)
+7. [Contact](#contact)
 
 # About the project
 
@@ -26,11 +25,24 @@ or here:
 
 https://www.yelp.com/dataset
 
-
 # Building and running
 
-First, you must start up the services provided by docker-compose.yml.
-### How to use the docker-compose.yml
+### 1. Get the data
+
+You must download the Yelp data set. I downloaded it from the kaggle link above.
+
+then you must specify the path to each file in the `src/main/resources/application.yaml`.
+```yaml
+data:
+  businessfile: path/to/your/yelp_academic_dataset_business.json
+  checkinfile: path/to/your/yelp_academic_dataset_checkin.json
+  userfile: path/to/your/yelp_academic_dataset_user.json
+  reviewfile: path/to/your/yelp_academic_dataset_review.json
+```
+
+
+### 2. Start the docker-compose.yml
+You must start up the services provided by docker-compose.yml.
 
 `docker-compose.yml` file is provided.
 
@@ -45,6 +57,7 @@ docker compose up -d
 
 This command will tell Docker to download and provision all necessary resources using the `docker-compose.yml` file.
 
+### 3. Start the application
 Now, start the Spring application using Maven
 ```shell
 ./mvnw spring-boot:run

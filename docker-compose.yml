@@ -5,10 +5,23 @@ services:
       - '27017:27017'
     volumes:
       - 'D:\mongo:/data/db'
-  postgres:
-    image: postgres
-    environment:
-      POSTGRES_USER: sa
-      POSTGRES_PASSWORD: password
+#  postgres:
+#    image: postgres
+#    environment:
+#      POSTGRES_USER: sa
+#      POSTGRES_PASSWORD: password
+#    ports:
+#      - '5432:5432'
+  ollama:
+    image: ollama/ollama:latest
     ports:
-      - '5432:5432'
+      - '11434:11434'
+    volumes:
+      - 'D:\ollama:/root/.ollama'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]

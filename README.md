@@ -76,21 +76,24 @@ This is the basis for the first data analysis: [Enumerate Business Attributes](d
 The current purpose of this code is to learn and practice coding. Especially with Java, Kotlin, and Spring.
 The following subsections will explain the technology being used in this project.
 
+### Spring AI
+Spring AI makes it easy to enable applications with generative AI. It provides many things to accelerate
+integration many AI services into existing Spring applications. 
+
+Learn more about how this project uses Spring AI here:
+
+- **[Spring AI with Ollama](docs/README-ai.md)**
+
 ### Spring Batch
 
 ### Open API Specification
-[Open API Specification]() offers brilliant tools for rapid development of REST API servers.
+[Open API Specification](https://swagger.io/) (OAS) offers brilliant tools for rapid development of REST API servers.
 The key idea is you can describe the entire API from a single YAML file.
 
-Maybe this is a place to learn if you like to read documentation:
+- **[OAS manual](https://swagger.io/docs/specification/about/)**
+- **[OAS code generator library](https://github.com/OpenAPITools/openapi-generator/tree/7bc2a660658766175a0fcde8e77c1b475bc970e6/docs/generators)**
 
-https://swagger.io/docs/specification/about/
-
-There is a large collection of code generators available here:
-
-https://github.com/OpenAPITools/openapi-generator/tree/7bc2a660658766175a0fcde8e77c1b475bc970e6/docs/generators
-
-By the way, **It is totally free!** This repository is demonstrating its use.
+**It is totally free!** This repository demonstrates its use.
 
 It is actually possible to use swagger.io to display the swagger docs for us, without needing to start the application server.
 The following link shows the Swagger UI docs for the API this server offers.

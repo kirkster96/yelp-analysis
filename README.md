@@ -1,14 +1,16 @@
 # Table of Contents
 
 1. [About the project](#About-the-project)
-   * [About the data](#about-the-data)
-2. [What does it do?](#what-does-it-do)
-    * [Spring Batch](#spring-batch)
-    * [Open API Specification](#open-api-specification)
-3. [How to use docker-compose.yml](#how-to-use-the-docker-composeyml)
-4. [Contribute](#contribute)
-5. [License](#license)
-6. [Contact](#contact)
+2. [Building and running](#Building-and-running)
+3. [About the data](#about-the-data)
+4. [What does it do?](#what-does-it-do)
+   * [Spring AI](#spring-ai)
+   * [Spring Batch](#spring-batch)
+   * [Open API Specification](#open-api-specification)
+5. [How to use docker-compose.yml](#how-to-use-the-docker-composeyml)
+6. [Contribute](#contribute)
+7. [License](#license)
+8. [Contact](#contact)
 
 # About the project
 
@@ -23,6 +25,32 @@ https://www.kaggle.com/datasets/yelp-dataset/yelp-dataset
 or here:
 
 https://www.yelp.com/dataset
+
+
+# Building and running
+
+First, you must start up the services provided by docker-compose.yml.
+### How to use the docker-compose.yml
+
+`docker-compose.yml` file is provided.
+
+**Step 1:** Make sure Docker Desktop is installed on your machine. If it's not, you can download it from the official [Docker website](https://www.docker.com/).
+
+**Step 2:** Open the directory where the `docker-compose.yml` file resides in your terminal (PowerShell or Command Prompt on Windows).
+
+**Step 3:** Run the following command: 
+```shell
+docker compose up -d
+````
+
+This command will tell Docker to download and provision all necessary resources using the `docker-compose.yml` file.
+
+Now, start the Spring application using Maven
+```shell
+./mvnw spring-boot:run
+```
+To stop the application, press the following keys:
+`ctrl + c`
 
 ## About the data
 Yelp has given 5 files where each line contains a single record in JSON format.
@@ -99,19 +127,6 @@ It is actually possible to use swagger.io to display the swagger docs for us, wi
 The following link shows the Swagger UI docs for the API this server offers.
 
 **[REST API for yelp-analysis Services](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/zowe/docs-site/docs-staging/api_definitions/datasets.json)**
-
-
-## How to use the docker-compose.yml
-
-To run our application in a containerized development environment, we provide a `docker-compose.yml` file. Here's a step-by-step guide on how to use this:
-
-**Step 1:** Make sure Docker Desktop is installed on your machine. If it's not, you can download it from the official Docker website.
-
-**Step 2:** Open the directory where the `docker-compose.yml` file resides in your terminal (PowerShell or Command Prompt on Windows).
-
-**Step 3:** Run the following command: `docker compose up -d`.
-
-This command will tell Docker to download and provision all necessary resources as described in the `docker-compose.yml` file, including setting up and running the necessary containers for the services defined in the file in the detached mode.
 
 ## Contribute
 

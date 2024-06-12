@@ -53,7 +53,7 @@ public class BusinessBatchConfiguration{
     			.name("businessFlatFileItemReader")
     			.resource(new FileSystemResource(businessFilePath))
 				.lineMapper(new LineMapper<Business>() {
-					ObjectMapper mapper = new ObjectMapper().registerModule(new KotlinModule());
+					final ObjectMapper mapper = new ObjectMapper();
 					@Override
 					public Business mapLine(String line, int lineNumber) throws Exception {
 						return mapper.readValue(line, Business.class);

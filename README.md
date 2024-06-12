@@ -132,7 +132,9 @@ Learn more about how this project uses Spring AI here:
 The key idea is you can describe the entire API from a single YAML file.
 
 - **[OAS manual](https://swagger.io/docs/specification/about/)**
-- **[OAS code generator library](https://github.com/OpenAPITools/openapi-generator/tree/7bc2a660658766175a0fcde8e77c1b475bc970e6/docs/generators)**
+- **[OAS code generator library](https://github.com/OpenAPITools/openapi-generator/blob/7bc2a660658766175a0fcde8e77c1b475bc970e6/docs/generators/README.md)**
+- **[OAS Spring Server Stub generator](https://github.com/OpenAPITools/openapi-generator/blob/7bc2a660658766175a0fcde8e77c1b475bc970e6/docs/generators/spring.md)**
+- **[OAS Maven Plugin Config](https://github.com/OpenAPITools/openapi-generator/blob/0cc9644120a6830bcf3677dadbfff419990eae26/modules/openapi-generator-maven-plugin/README.md)**
 
 **It is totally free!** This repository demonstrates its use.
 

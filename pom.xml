@@ -5,15 +5,21 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.5</version>
+        <version>3.3.0</version>
         <relativePath/>
         <!-- lookup parent from repository -->
     </parent>
     <groupId>com.mpc.data</groupId>
     <artifactId>yelp-util</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>yelp-analysis</name>
     <description>yelp-analysis</description>
+    <modules>
+        <module>yelp-oas-generator</module>
+        <module>yelp-oas-spring</module>
+        <module>yelp-service</module>
+    </modules>
     <properties>
         <java.version>17</java.version>
         <kotlin.version>1.9.24</kotlin.version>
@@ -30,6 +36,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <dependencies>
 
         <dependency>
@@ -103,38 +110,15 @@
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
-                <!-- RELEASE_VERSION -->
-                <version>7.5.0</version>
-                <!-- /RELEASE_VERSION -->
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>${project.basedir}/yelp.yaml</inputSpec>
-                            <generatorName>spring</generatorName>
-                            <addCompileSourceRoot>false</addCompileSourceRoot>
-                            <skip>true</skip>
-                            <configOptions>
-                                <sourceFolder>src/gen/java/main</sourceFolder>
-                                <useSpringBoot3>true</useSpringBoot3>
-                            </configOptions>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>

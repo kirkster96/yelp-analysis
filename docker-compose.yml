@@ -25,3 +25,9 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
+  cassandra:
+    image: cassandra:latest
+    ports:
+      - '9042:9042'
+    volumes:
+      - 'D:\cassandra:/var/lib/cassandra'

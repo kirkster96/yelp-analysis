@@ -1,0 +1,408 @@
+openapi: 3.0.3
+info:
+  contact:
+    name: Yelp Analysis
+    url: https://github.com/kirkster96/yelp-analysis
+  description: |
+    This is the ***Yelp Analysis API***. View the documentation below to understand the types of requests that can be made to this server from clients. You can find out more about Swagger at [swagger.io](http://swagger.io).
+  license:
+    name: MIT
+    url: https://github.com/kirkster96/yelp-analysis/blob/master/LICENSE
+  termsOfService: https://github.com/kirkster96/yelp-analysis/blob/master/LICENSE
+  title: Yelp Analysis API
+  version: 1.0.0
+externalDocs:
+  description: README.md
+  url: https://github.com/kirkster96/yelp-analysis/blob/master/README.md
+servers:
+- url: /
+tags:
+- description: Submit batch jobs to control the configured database
+  externalDocs:
+    description: Find out more (extra document link)
+    url: https://github.com/kirkster96/yelp-analysis/blob/master/docs/DATABASE.md
+  name: Database
+- description: Operations about businesses
+  name: Businesses
+- description: Operations about checkins
+  name: Checkins
+- description: Operations about business's reviews
+  name: Reviews
+- description: Operations about tips
+  name: Tips
+- description: Operations about users
+  name: Users
+paths:
+  /businesses/{businessId}:
+    get:
+      description: Gets a business entity.
+      operationId: getBusiness
+      parameters:
+      - explode: false
+        in: path
+        name: businessId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Business'
+          description: Successful operation
+          links:
+            GetCheckinByBusinessId:
+              description: |
+                The `id` value returned in the response can be used as the `businessId` parameter in `GET /checkins/{businessId}`.
+              operationId: getCheckin
+              parameters:
+                userId: $response.body#/business_id
+      summary: Get business by id
+      tags:
+      - Businesses
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Businesses
+  /checkins/{businessId}:
+    get:
+      operationId: getCheckin
+      parameters:
+      - explode: false
+        in: path
+        name: businessId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckIn'
+          description: A Checkin object
+      tags:
+      - Checkins
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Checkins
+components:
+  schemas:
+    Business:
+      description: "Contains business data including location data, attributes, and\
+        \ categories."
+      example:
+        address: 1234 Clayton Rd
+        city: Saint Louis
+        is_open: 1
+        latitude: 38.6385628
+        name: Example Cafe
+        review_count: 160
+        attributes:
+          BikeParking: "True"
+          HairSpecializesIn: "{'straightperms': True, 'coloring': True, 'extensions':\
+            \ False, 'africanamerican': False, 'curly': True, 'kids': True, 'perms':\
+            \ True, 'asian': True}"
+          BusinessParking: "{'garage': False, 'street': False, 'validated': False,\
+            \ 'lot': True, 'valet': False}"
+          BestNights: "{'monday': False, 'tuesday': False, 'friday': False, 'wednesday':\
+            \ False, 'thursday': False, 'sunday': False, 'saturday': False}"
+          GoodForDancing: "False"
+          RestaurantsGoodForGroups: "True"
+          RestaurantsPriceRange2: "2"
+          Alcohol: u'full_bar'
+          RestaurantsTakeOut: "True"
+          ByAppointmentOnly: "True"
+          Caters: "False"
+          CoatCheck: "False"
+          GoodForKids: "True"
+          RestaurantsAttire: u'casual'
+          Open24Hours: "False"
+          HasTV: "True"
+          BusinessAcceptsCreditCards: "True"
+          RestaurantsDelivery: "True"
+          BusinessAcceptsBitcoin: "False"
+          NoiseLevel: u'average'
+          RestaurantsCounterService: "True"
+          RestaurantsTableService: "True"
+          RestaurantsReservations: "False"
+          WheelchairAccessible: "True"
+          HappyHour: "True"
+          AcceptsInsurance: "False"
+          DriveThru: "False"
+          BYOB: "False"
+          Music: "{'dj': False, 'background_music': False, 'no_music': False, 'jukebox':\
+            \ None, 'live': False, 'video': False, 'karaoke': None}"
+          DietaryRestrictions: "{'dairy-free': False, 'gluten-free': False, 'vegan':\
+            \ True, 'kosher': False, 'halal': False, 'soy-free': False, 'vegetarian':\
+            \ True}"
+          Ambience: "{'touristy': False, 'hipster': False, 'romantic': False, 'divey':\
+            \ False, 'intimate': False, 'trendy': False, 'upscale': False, 'classy':\
+            \ False, 'casual': False}"
+          WiFi: '''free'''
+          DogsAllowed: "False"
+          Corkage: "False"
+          BYOBCorkage: '''no'''
+          GoodForMeal: "{'dessert': False, 'latenight': False, 'lunch': False, 'dinner':\
+            \ False, 'brunch': False, 'breakfast': False}"
+          OutdoorSeating: "True"
+          Smoking: u'no'
+          AgesAllowed: u'allages'
+        state: MO
+        stars: 4.0
+        postal_code: "45123"
+        business_id: cN8F-BmoHoS9eCqIHMtlHA
+        longitude: -90.3902411
+      properties:
+        business_id:
+          example: cN8F-BmoHoS9eCqIHMtlHA
+          type: string
+        name:
+          example: Example Cafe
+          type: string
+        address:
+          example: 1234 Clayton Rd
+          type: string
+        city:
+          example: Saint Louis
+          type: string
+        state:
+          example: MO
+          type: string
+        postal_code:
+          example: "45123"
+          type: string
+        latitude:
+          example: 38.6385628
+          format: double
+          type: number
+        longitude:
+          example: -90.3902411
+          format: double
+          type: number
+        stars:
+          example: 4.0
+          format: float
+          type: number
+        review_count:
+          example: 160
+          format: int32
+          type: integer
+        is_open:
+          example: 1
+          format: int32
+          type: integer
+        attributes:
+          $ref: '#/components/schemas/Business_attributes'
+      type: object
+    CheckIn:
+      description: "Contains business data including location data, attributes, and\
+        \ categories."
+      example:
+        date: date
+        business_id: business_id
+      properties:
+        business_id:
+          description: "22 character business id, maps to business in business.json"
+          type: string
+        date:
+          description: "string which is a comma-separated list of timestamps for each\
+            \ checkin, each with format YYYY-MM-DD HH:MM:SS"
+          type: string
+      type: object
+    Review:
+      description: "Contains business data including location data, attributes, and\
+        \ categories."
+      properties:
+        business_id:
+          description: "22 character business id, maps to business in business.json"
+          type: string
+        date:
+          description: "string which is a comma-separated list of timestamps for each\
+            \ checkin, each with format YYYY-MM-DD HH:MM:SS"
+          type: string
+      type: object
+    Business_attributes:
+      additionalProperties: true
+      example:
+        BikeParking: "True"
+        HairSpecializesIn: "{'straightperms': True, 'coloring': True, 'extensions':\
+          \ False, 'africanamerican': False, 'curly': True, 'kids': True, 'perms':\
+          \ True, 'asian': True}"
+        BusinessParking: "{'garage': False, 'street': False, 'validated': False, 'lot':\
+          \ True, 'valet': False}"
+        BestNights: "{'monday': False, 'tuesday': False, 'friday': False, 'wednesday':\
+          \ False, 'thursday': False, 'sunday': False, 'saturday': False}"
+        GoodForDancing: "False"
+        RestaurantsGoodForGroups: "True"
+        RestaurantsPriceRange2: "2"
+        Alcohol: u'full_bar'
+        RestaurantsTakeOut: "True"
+        ByAppointmentOnly: "True"
+        Caters: "False"
+        CoatCheck: "False"
+        GoodForKids: "True"
+        RestaurantsAttire: u'casual'
+        Open24Hours: "False"
+        HasTV: "True"
+        BusinessAcceptsCreditCards: "True"
+        RestaurantsDelivery: "True"
+        BusinessAcceptsBitcoin: "False"
+        NoiseLevel: u'average'
+        RestaurantsCounterService: "True"
+        RestaurantsTableService: "True"
+        RestaurantsReservations: "False"
+        WheelchairAccessible: "True"
+        HappyHour: "True"
+        AcceptsInsurance: "False"
+        DriveThru: "False"
+        BYOB: "False"
+        Music: "{'dj': False, 'background_music': False, 'no_music': False, 'jukebox':\
+          \ None, 'live': False, 'video': False, 'karaoke': None}"
+        DietaryRestrictions: "{'dairy-free': False, 'gluten-free': False, 'vegan':\
+          \ True, 'kosher': False, 'halal': False, 'soy-free': False, 'vegetarian':\
+          \ True}"
+        Ambience: "{'touristy': False, 'hipster': False, 'romantic': False, 'divey':\
+          \ False, 'intimate': False, 'trendy': False, 'upscale': False, 'classy':\
+          \ False, 'casual': False}"
+        WiFi: '''free'''
+        DogsAllowed: "False"
+        Corkage: "False"
+        BYOBCorkage: '''no'''
+        GoodForMeal: "{'dessert': False, 'latenight': False, 'lunch': False, 'dinner':\
+          \ False, 'brunch': False, 'breakfast': False}"
+        OutdoorSeating: "True"
+        Smoking: u'no'
+        AgesAllowed: u'allages'
+      properties:
+        ByAppointmentOnly:
+          example: "True"
+          type: string
+        AcceptsInsurance:
+          example: "False"
+          type: string
+        BusinessAcceptsCreditCards:
+          example: "True"
+          type: string
+        WiFi:
+          example: '''free'''
+          type: string
+        GoodForKids:
+          example: "True"
+          type: string
+        BikeParking:
+          example: "True"
+          type: string
+        BusinessParking:
+          example: "{'garage': False, 'street': False, 'validated': False, 'lot':\
+            \ True, 'valet': False}"
+          type: string
+        Alcohol:
+          example: u'full_bar'
+          type: string
+        RestaurantsDelivery:
+          example: "True"
+          type: string
+        Ambience:
+          example: "{'touristy': False, 'hipster': False, 'romantic': False, 'divey':\
+            \ False, 'intimate': False, 'trendy': False, 'upscale': False, 'classy':\
+            \ False, 'casual': False}"
+          type: string
+        RestaurantsReservations:
+          example: "False"
+          type: string
+        RestaurantsTakeOut:
+          example: "True"
+          type: string
+        NoiseLevel:
+          example: u'average'
+          type: string
+        GoodForMeal:
+          example: "{'dessert': False, 'latenight': False, 'lunch': False, 'dinner':\
+            \ False, 'brunch': False, 'breakfast': False}"
+          type: string
+        Caters:
+          example: "False"
+          type: string
+        HasTV:
+          example: "True"
+          type: string
+        WheelchairAccessible:
+          example: "True"
+          type: string
+        HappyHour:
+          example: "True"
+          type: string
+        RestaurantsPriceRange2:
+          example: "2"
+          type: string
+        DriveThru:
+          example: "False"
+          type: string
+        DogsAllowed:
+          example: "False"
+          type: string
+        BusinessAcceptsBitcoin:
+          example: "False"
+          type: string
+        OutdoorSeating:
+          example: "True"
+          type: string
+        RestaurantsAttire:
+          example: u'casual'
+          type: string
+        RestaurantsTableService:
+          example: "True"
+          type: string
+        RestaurantsGoodForGroups:
+          example: "True"
+          type: string
+        Music:
+          example: "{'dj': False, 'background_music': False, 'no_music': False, 'jukebox':\
+            \ None, 'live': False, 'video': False, 'karaoke': None}"
+          type: string
+        BestNights:
+          example: "{'monday': False, 'tuesday': False, 'friday': False, 'wednesday':\
+            \ False, 'thursday': False, 'sunday': False, 'saturday': False}"
+          type: string
+        CoatCheck:
+          example: "False"
+          type: string
+        GoodForDancing:
+          example: "False"
+          type: string
+        Smoking:
+          example: u'no'
+          type: string
+        BYOB:
+          example: "False"
+          type: string
+        Corkage:
+          example: "False"
+          type: string
+        HairSpecializesIn:
+          example: "{'straightperms': True, 'coloring': True, 'extensions': False,\
+            \ 'africanamerican': False, 'curly': True, 'kids': True, 'perms': True,\
+            \ 'asian': True}"
+          type: string
+        BYOBCorkage:
+          example: '''no'''
+          type: string
+        DietaryRestrictions:
+          example: "{'dairy-free': False, 'gluten-free': False, 'vegan': True, 'kosher':\
+            \ False, 'halal': False, 'soy-free': False, 'vegetarian': True}"
+          type: string
+        AgesAllowed:
+          example: u'allages'
+          type: string
+        Open24Hours:
+          example: "False"
+          type: string
+        RestaurantsCounterService:
+          example: "True"
+          type: string
+      type: object

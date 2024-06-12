@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.mpc.data</groupId>
+        <artifactId>yelp-util</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>yelp-oas-generator</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <!-- RELEASE_VERSION -->
+                <version>7.5.0</version>
+                <!-- /RELEASE_VERSION -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/yelp.yaml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <addCompileSourceRoot>false</addCompileSourceRoot>
+                            <ignoreFileOverride>${project.basedir}/src/main/resources/.openapi-generator-ignore</ignoreFileOverride>
+                            <output>../yelp-oas-spring</output>
+                            <cleanupOutput>true</cleanupOutput>
+                            <!--                            <skip>true</skip>-->
+                            <importMappings>
+                                ResourceSupport=org.springframework.hateoas.RepresentationModel,
+                                Link=org.springframework.hateoas.Link
+                            </importMappings>
+                            <configOptions>
+                                <!-- add the parent pom -->
+                                <parentGroupId>com.mpc.data</parentGroupId>
+                                <parentArtifactId>yelp-util</parentArtifactId>
+                                <parentVersion>0.0.1-SNAPSHOT</parentVersion>
+
+                                <!-- only generate the interfaces (no impl) -->
+                                <requestMappingMode>api_interface</requestMappingMode>
+                                <interfaceOnly>false</interfaceOnly>
+                                <skipDefaultInterface>true</skipDefaultInterface>
+
+                                <groupId>com.mpc.data</groupId>
+                                <artifactId>yelp-aos-spring</artifactId>
+                                <artifactVersion>${project.version}</artifactVersion>
+
+                                <sourceFolder>src/main/java</sourceFolder>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                <serializableModel>true</serializableModel>
+                                <useTags>true</useTags>
+                                <hateoas>true</hateoas>
+                                <unhandledException>true</unhandledException>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

@@ -1,0 +1,345 @@
+openapi: 3.0.3
+info:
+  title: Yelp Analysis API
+  description: >
+    This is the ***Yelp Analysis API***. View the documentation below to understand the types of requests that can be made to this server from clients. You can find out more about Swagger at [swagger.io](http://swagger.io).
+  termsOfService: https://github.com/kirkster96/yelp-analysis/blob/master/LICENSE
+  contact:
+    name: Yelp Analysis
+    url: https://github.com/kirkster96/yelp-analysis
+  license:
+    name: MIT
+    url:  https://github.com/kirkster96/yelp-analysis/blob/master/LICENSE
+  version: 1.0.0
+externalDocs:
+  description: README.md
+  url: https://github.com/kirkster96/yelp-analysis/blob/master/README.md
+tags:
+  - name: Database
+    description: Submit batch jobs to control the configured database
+    externalDocs:
+      description: Find out more (extra document link)
+      url: https://github.com/kirkster96/yelp-analysis/blob/master/docs/DATABASE.md
+  - name: Businesses
+    description: Operations about businesses
+  - name: Checkins
+    description: Operations about checkins
+  - name: Reviews
+    description: Operations about business's reviews
+  - name: Tips
+    description: Operations about tips
+  - name: Users
+    description: Operations about users
+
+paths:
+  /businesses/{businessId}:
+    get:
+      tags:
+        - Businesses
+      summary: Get business by id
+      description: Gets a business entity.
+      operationId: getBusiness
+      parameters:
+        - in: path
+          name: businessId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Business'
+          links:
+            GetCheckinByBusinessId: # <---- arbitrary name for the link
+              operationId: getCheckin
+              parameters:
+                userId: '$response.body#/business_id'
+              description: >
+                The `id` value returned in the response can be used as
+                the `businessId` parameter in `GET /checkins/{businessId}`.
+
+  /checkins/{businessId}:
+    get:
+      tags:
+        - Checkins
+      operationId: getCheckin
+      parameters:
+        - in: path
+          name: businessId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A Checkin object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckIn'
+
+
+components:
+  schemas:
+    Business:
+      description: Contains business data including location data, attributes, and categories.
+      type: object
+      properties:
+        business_id:
+          example: "cN8F-BmoHoS9eCqIHMtlHA"
+          type: string
+        name:
+          example: "Example Cafe"
+          type: string
+        address:
+          example: "1234 Clayton Rd"
+          type: string
+        city:
+          example: "Saint Louis"
+          type: string
+        state:
+          example: "MO"
+          type: string
+        postal_code:
+          example: "45123"
+          type: string
+        latitude:
+          example: 38.6385628
+          type: number
+          format: double
+        longitude:
+          example: -90.3902411
+          type: number
+          format: double
+        stars:
+          example: 4.0
+          type: number
+          format: float
+        review_count:
+          example: 160
+          type: integer
+          format: int32
+        is_open:
+          example: 1
+          type: integer
+          format: int32
+        attributes:
+          type: object
+          properties:
+            ByAppointmentOnly:
+              example: "True"
+              type: string
+            AcceptsInsurance:
+              example: "False"
+              type: string
+            BusinessAcceptsCreditCards:
+              example: "True"
+              type: string
+            WiFi:
+              example: "'free'"
+              type: string
+            GoodForKids:
+              example: "True"
+              type: string
+            BikeParking:
+              example: "True"
+              type: string
+            BusinessParking:
+              example: "{'garage': False, 'street': False, 'validated': False, 'lot': True, 'valet': False}"
+              type: string
+            Alcohol:
+              example: "u'full_bar'"
+              type: string
+            RestaurantsDelivery:
+              example: "True"
+              type: string
+            Ambience:
+              example: "{'touristy': False, 'hipster': False, 'romantic': False, 'divey': False, 'intimate': False, 'trendy': False, 'upscale': False, 'classy': False, 'casual': False}"
+              type: string
+            RestaurantsReservations:
+              example: "False"
+              type: string
+            RestaurantsTakeOut:
+              example: "True"
+              type: string
+            NoiseLevel:
+              example: "u'average'"
+              type: string
+            GoodForMeal:
+              example: "{'dessert': False, 'latenight': False, 'lunch': False, 'dinner': False, 'brunch': False, 'breakfast': False}"
+              type: string
+            Caters:
+              example: "False"
+              type: string
+            HasTV:
+              example: "True"
+              type: string
+            WheelchairAccessible:
+              example: "True"
+              type: string
+            HappyHour:
+              example: "True"
+              type: string
+            RestaurantsPriceRange2:
+              example: "2"
+              type: string
+            DriveThru:
+              example: "False"
+              type: string
+            DogsAllowed:
+              example: "False"
+              type: string
+            BusinessAcceptsBitcoin:
+              example: "False"
+              type: string
+            OutdoorSeating:
+              example: "True"
+              type: string
+            RestaurantsAttire:
+              example: "u'casual'"
+              type: string
+            RestaurantsTableService:
+              example: "True"
+              type: string
+            RestaurantsGoodForGroups:
+              example: "True"
+              type: string
+            Music:
+              example: "{'dj': False, 'background_music': False, 'no_music': False, 'jukebox': None, 'live': False, 'video': False, 'karaoke': None}"
+              type: string
+            BestNights:
+              example: "{'monday': False, 'tuesday': False, 'friday': False, 'wednesday': False, 'thursday': False, 'sunday': False, 'saturday': False}"
+              type: string
+            CoatCheck:
+              example: "False"
+              type: string
+            GoodForDancing:
+              example: "False"
+              type: string
+            Smoking:
+              example: "u'no'"
+              type: string
+            BYOB:
+              example: "False"
+              type: string
+            Corkage:
+              example: "False"
+              type: string
+            HairSpecializesIn:
+              example: "{'straightperms': True, 'coloring': True, 'extensions': False, 'africanamerican': False, 'curly': True, 'kids': True, 'perms': True, 'asian': True}"
+              type: string
+            BYOBCorkage:
+              example: "'no'"
+              type: string
+            DietaryRestrictions:
+              example: "{'dairy-free': False, 'gluten-free': False, 'vegan': True, 'kosher': False, 'halal': False, 'soy-free': False, 'vegetarian': True}"
+              type: string
+            AgesAllowed:
+              example: "u'allages'"
+              type: string
+            Open24Hours:
+              example: "False"
+              type: string
+            RestaurantsCounterService:
+              example: "True"
+              type: string
+          additionalProperties: true
+
+    CheckIn:
+      description: Contains business data including location data, attributes, and categories.
+      type: object
+      properties:
+        business_id:
+          description: 22 character business id, maps to business in business.json
+          type: string
+        date:
+          description: string which is a comma-separated list of timestamps for each checkin, each with format YYYY-MM-DD HH:MM:SS
+          type: string
+
+    Review:
+      description: Contains full review text data including the user_id that wrote the review and the business_id the review is written for.
+      type: object
+      properties:
+        review_id:
+          description: string, 22 character unique review id
+          example: "zdSx_SD6obEhz9VrW9uAWA"
+          type: string
+        user_id:
+          description: string, 22 character unique user id, maps to the user in user.json
+          example: "Ha3iJu77CxlrFm-vQRs_8g"
+          type: string
+        business_id:
+          description: string, 22 character business id, maps to business in business.json
+          example: "tnhfDv5Il8EaGSXZGiuQGg"
+          type: string
+        stars:
+          description: star rating
+          example: 4
+          type: number
+          format: float
+        useful:
+          description: number of useful votes received
+          example: 0
+          type: integer
+          format: int32
+        funny:
+          description: number of funny votes received
+          example: 0
+          type: integer
+          format: int32
+        cool:
+          description: number of cool votes received
+          example: 0
+          type: integer
+          format: int32
+        text:
+          description: the review itself
+          example: "Great place to hang out after work: the prices are decent, and the ambience is fun. It's a bit loud, but very lively. The staff is friendly, and the food is good. They have a good selection of drinks."
+          type: string
+        date:
+          description: date formatted YYYY-MM-DD
+          example: "2016-03-09"
+          type: string
+          format: date
+
+
+    User:
+      description: User data including the user's friend mapping and all the metadata associated with the user.
+      type: object
+      properties:
+        user_id:
+          description: 22 character unique user id, maps to the user in user.json
+          example: "Ha3iJu77CxlrFm-vQRs_8g"
+          type: string
+        name:
+          description: the user's first name
+          example: "Sebastien"
+          type: string
+        review_count:
+          description: the number of reviews they've written
+          example: 56
+          type: integer
+          format: int32
+        yelping_since:
+          description: when the user joined Yelp, formatted like YYYY-MM-DD
+          example: "2011-01-01"
+          type: string
+          format: date
+        useful:
+          description: number of useful votes sent by the user
+          example: 0
+          type: integer
+          format: int32
+        funny:
+          description: number of funny votes sent by the user
+          example: 0
+          type: integer
+          format: int32
+        cool:
+          description: number of cool votes sent by the user
+          example: 0
+          type: integer
+          format: int32
+        date:
